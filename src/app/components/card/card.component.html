@@ -1,0 +1,49 @@
+<!-- <button (click)="toggleCustomize()">Customize</button>
+<div class="container" *ngIf="isCustomizing; else block2">
+  <div class="card" *ngFor="let card of cards" cdkDrag>
+    <h3>{{ card.title }}</h3>
+    <p>{{ card.paragraph }}</p>
+  </div>
+</div>
+
+<ng-template #block2>
+  <div class="container">
+    <div class="card" *ngFor="let card of cards" (click)="editCard(card.id)">
+      <h3>{{ card.title }}</h3>
+      <p>{{ card.paragraph }}</p>
+    </div>
+  </div>
+</ng-template> -->
+
+<div class="container" *ngIf="!isCustomizing; else block2">
+  <div>
+    <button (click)="toggleCustomize()">Edit</button>
+  </div>
+  <div
+    class="card"
+    *ngFor="let card of cards; let i = index"
+    [ngStyle]="{ 'background-color': getColor(i) }"
+    cdkDrag
+    [cdkDragDisabled]="isResizing"
+  >
+    <h3>{{ card.title }}</h3>
+    <p>{{ card.paragraph | truncate : 10 }}</p>
+    <div class="resize-handle" (mousedown)="onResizeStart($event, i)"></div>
+  </div>
+</div>
+<ng-template #block2>
+  <div class="container">
+    <div>
+      <button (click)="toggleCustomize()">Customize</button>
+    </div>
+    <div
+      class="card"
+      *ngFor="let card of cards"
+      (click)="editCard(card.id)"
+      [ngStyle]="{ 'background-color': getColor(card.id) }"
+    >
+      <h3>{{ card.title }}</h3>
+      <p>{{ card.paragraph }}</p>
+    </div>
+  </div>
+</ng-template>
